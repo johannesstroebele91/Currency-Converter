@@ -20,12 +20,19 @@ public class App {
      */
     public static void main( String[] args ) {
 
-        if(Input.getInput("Hello"))
-        {
+        // Beispiel für die Input.getInput()-Methode
+        if(Input.getInput("Hello")) {
             System.out.println("success");
         }
-        else
-        {
+        else {
+            System.out.println("fail");
+        }
+
+        //Beispiel für die Input.searchForString()-Methode
+        if(Input.searchForString("Hello World")) {
+            System.out.println("success");
+        }
+        else {
             System.out.println("fail");
         }
     }
