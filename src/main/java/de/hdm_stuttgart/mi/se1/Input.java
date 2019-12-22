@@ -24,16 +24,40 @@ public class Input {
     }
 
     /**
-     * Diese Methode überprüft, ob ein eingebener String in einem anderen String enthalten ist
-     *  --> Wichtig für die Suchfunktion bei der Währungseingabe
-     * @param stringToBeChecked Der String, in welchem der eingegebe String enthalten sein soll
-     * @return Ob der eingegebe String in dem gewünschten String vorkommt
+     * Die Methode ist wichtig für die Suchfunktion. Sie gibt uns ein String-Array mit allen Strings zurück,
+     * die den eingegeben String enthalten.
+     * @param stringsToBeChecked Das Array mit allen Währungsnamen
+     * @return Ein neues Array mit allen Namen, die bei der Suche gefunden wurden
      */
-    public static boolean searchForString(String stringToBeChecked) {
+    public static String[] searchAllCurrencies(String[] stringsToBeChecked) {
+        String[] foundStrings = new String[0];
         String searchedString = scan.next();
-        if (stringToBeChecked.contains(searchedString)) {
-            return true;
+
+        for (int i = 0; i < stringsToBeChecked.length; i++) {
+            if (stringsToBeChecked[i].toLowerCase().contains(searchedString.toLowerCase())) {
+                foundStrings = addString(foundStrings, foundStrings.length, stringsToBeChecked[i]);
+            }
         }
-        return false;
+        return foundStrings;
+    }
+
+    /**
+     * Diese Methode wird genutzt, um einen String an ein String-Array anzuhängen. So können wir un der Methode searchAllCurrencies()
+     * einen String zu einem Array hinzufügen, wenn er zum gesuchten Begriff passt.
+     * @param oldArray Das alte Array, an welches ein String angehängt werden soll
+     * @param length Die Länge des alten Arrays
+     * @param stringToAdd Der String, der an das alte Array angehängt werden soll
+     * @return Ein Array mit dem angehängten String
+     */
+    private static String[] addString(String[] oldArray, int length, String stringToAdd)
+    {
+        String[] newArray = new String[length + 1];
+
+        for (int i = 0; i < length; i++) {
+            newArray[i] = oldArray[i];
+        }
+
+        newArray[length] = stringToAdd;
+        return newArray;
     }
 }

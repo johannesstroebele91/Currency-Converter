@@ -1,8 +1,6 @@
 package de.hdm_stuttgart.mi.se1;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import java.util.Arrays;
 
 /**
  * A simple http://logging.apache.org/log4j/2.x demo,
@@ -11,8 +9,6 @@ import org.apache.logging.log4j.Logger;
  */
 
 public class App {
-    private static Logger log = LogManager.getLogger(App.class);
-
     /**
      * Your application's main entry point.
      *
@@ -28,12 +24,13 @@ public class App {
             System.out.println("fail");
         }
 
-        //Beispiel für die Input.searchForString()-Methode
-        if(Input.searchForString("Hello World")) {
-            System.out.println("success");
-        }
-        else {
-            System.out.println("fail");
+        // Beispiel für die Input.searchAllCurrencies()-Methode
+        String[] example = new String[] {"Australian Dollar", "Canadian Dollar", "Pound Sterling", "Euro", "US Dollar", "Chinese Yuan"};
+        String[] searchedExample = Input.searchAllCurrencies(example);
+        System.out.println(Arrays.toString(searchedExample));
+        // oder untereinander
+        for (int i = 0; i < searchedExample.length; i++) {
+            System.out.println((i + 1) + ". " + searchedExample[i]);
         }
     }
 }
