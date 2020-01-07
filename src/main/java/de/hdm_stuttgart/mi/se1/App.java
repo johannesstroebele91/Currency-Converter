@@ -1,6 +1,7 @@
 package de.hdm_stuttgart.mi.se1;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  * A simple http://logging.apache.org/log4j/2.x demo,
@@ -14,10 +15,18 @@ public class App {
      *
      * @param args Yet unused
      */
-    public static void main( String[] args ) {
+    private static Scanner scan = new Scanner(System.in);
 
+    public static String[] allCurrencies;
+    public static double[] allExchangeRates;
+
+    private int indexOfOldCurrency;
+    private int indexOfNewCurrency;
+
+    public static void main( String[] args ) {
         // Beispiel für die Input.getInput()-Methode
-        if(Input.getInput("Hello")) {
+        String pressedKeys = scan.next();
+        if(Input.getInput("Hello", pressedKeys)) {
             System.out.println("success");
         }
         else {
@@ -26,11 +35,12 @@ public class App {
 
         // Beispiel für die Input.searchAllCurrencies()-Methode
         String[] example = new String[] {"Australian Dollar", "Canadian Dollar", "Pound Sterling", "Euro", "US Dollar", "Chinese Yuan"};
-        String[] searchedExample = Input.searchAllCurrencies(example);
+        String searchedString = scan.next();
+        String[] searchedExample = Input.searchAllCurrencies(example, searchedString);
         System.out.println(Arrays.toString(searchedExample));
         // oder untereinander
         for (int i = 0; i < searchedExample.length; i++) {
-            System.out.println((i + 1) + ". " + searchedExample[i]);
+            System.out.println((i) + ". " + searchedExample[i]);
         }
     }
 }

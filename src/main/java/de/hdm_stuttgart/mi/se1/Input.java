@@ -1,24 +1,40 @@
 package de.hdm_stuttgart.mi.se1;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Die Input-Klasse soll uns das Vergleichen der eingegebenen Zeichen mit unseren gewollten Zeichen erleichtern
  */
 
 public class Input {
-    static Scanner scan = new Scanner(System.in);
 
-    static String[] allCurrencies;
-    static double[] allExchangeRates;
-
+    /**
+     * Diese Methode liest eine Datei in ein Array ein
+     * @param filename Der Name der Datei, die eingelesen werden soll
+     * @return Ein Array, dass die einzelnen Zeilen der Datei als einzelne Arraypositionen
+     * @throws IOException
+     */
+    public static String[] readLines(String filename) throws IOException {
+        FileReader fileReader = new FileReader(filename);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        List<String> lines = new ArrayList<String>();
+        String line = null;
+        while ((line = bufferedReader.readLine()) != null) {
+            lines.add(line);
+        }
+        bufferedReader.close();
+        return lines.toArray(new String[lines.size()]);
+    }
     /**
      * Diese Methode überprüft, ob ein bestimmter String eingegeben wird
      * @param desiredInput Der String, der eingegeben werden muss, damit die Methode true zurückgibt
      * @return Ob der eingegebe String gleich ist wie der gewünschte String
      */
-    public static boolean getInput(String desiredInput) {
-        String pressedKeys = scan.next();
+    public static boolean getInput(String desiredInput, String pressedKeys) {
         // .equalsIgnoreCase() ignoriert Groß- und Kleinschreibung des Strings.
         if(pressedKeys.equalsIgnoreCase(desiredInput)) {
             return true;
@@ -32,9 +48,8 @@ public class Input {
      * @param stringsToBeChecked Das Array mit den Strings, die überprüft werden sollen (in unserem alle Währungsnamen)
      * @return Ein neues Array mit allen Namen, die bei der Suche gefunden wurden
      */
-    public static String[] searchAllCurrencies(String[] stringsToBeChecked) {
+    public static String[] searchAllCurrencies(String[] stringsToBeChecked, String searchedString) {
         String[] foundStrings = new String[0];
-        String searchedString = scan.next();
 
         for (int i = 0; i < stringsToBeChecked.length; i++) {
             if (stringsToBeChecked[i].toLowerCase().contains(searchedString.toLowerCase())) {
@@ -69,9 +84,11 @@ public class Input {
      * @param indexOfOldCurrency Der Index im Array allCurrencies[] der alten Währung
      * @param indexOfNewCurrency Der Index im Array allCurrencies[] der alten Währung
      * @param moneyAmount Der Betrag der Währung vor dem umrechnenen
+     * @param allCurrecies Das Array, welches alle Währungsnamen enthält
+     * @param allExchangeRates Das Array, welches alle Umrechnungssätze enthält
      * @return Den Betrag der neuen Währung auf 2 Nachkommastellen gerundet
      */
-    public static double CalculateNewCurrency(int indexOfOldCurrency, int indexOfNewCurrency, double moneyAmount)
+    public static double CalculateNewCurrency(int indexOfOldCurrency, int indexOfNewCurrency, double moneyAmount, String[] allCurrecies, double[] allExchangeRates)
     {
         return Math.round(moneyAmount * allExchangeRates[indexOfOldCurrency] * allExchangeRates[indexOfNewCurrency] * 100) / 100;
     }
