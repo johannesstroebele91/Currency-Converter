@@ -9,6 +9,9 @@ import java.util.Scanner;
 public class Input {
     static Scanner scan = new Scanner(System.in);
 
+    static String[] allCurrencies;
+    static double[] allExchangeRates;
+
     /**
      * Diese Methode überprüft, ob ein bestimmter String eingegeben wird
      * @param desiredInput Der String, der eingegeben werden muss, damit die Methode true zurückgibt
@@ -26,7 +29,7 @@ public class Input {
     /**
      * Die Methode ist wichtig für die Suchfunktion. Sie gibt uns ein String-Array mit allen Strings zurück,
      * die den eingegeben String enthalten.
-     * @param stringsToBeChecked Das Array mit allen Währungsnamen
+     * @param stringsToBeChecked Das Array mit den Strings, die überprüft werden sollen (in unserem alle Währungsnamen)
      * @return Ein neues Array mit allen Namen, die bei der Suche gefunden wurden
      */
     public static String[] searchAllCurrencies(String[] stringsToBeChecked) {
@@ -59,5 +62,17 @@ public class Input {
 
         newArray[length] = stringToAdd;
         return newArray;
+    }
+
+    /**
+     *Die Methode um unsere Währungen umzurechnenen
+     * @param indexOfOldCurrency Der Index im Array allCurrencies[] der alten Währung
+     * @param indexOfNewCurrency Der Index im Array allCurrencies[] der alten Währung
+     * @param moneyAmount Der Betrag der Währung vor dem umrechnenen
+     * @return Den Betrag der neuen Währung auf 2 Nachkommastellen gerundet
+     */
+    public static double CalculateNewCurrency(int indexOfOldCurrency, int indexOfNewCurrency, double moneyAmount)
+    {
+        return Math.round(moneyAmount * allExchangeRates[indexOfOldCurrency] * allExchangeRates[indexOfNewCurrency] * 100) / 100;
     }
 }
