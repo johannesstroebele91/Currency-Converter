@@ -29,6 +29,16 @@ public class Input {
         bufferedReader.close();
         return lines.toArray(new String[lines.size()]);
     }
+
+    public static String[] splitArray(String[] originalArray, int index)
+    {
+        String[] newArray = new String[0];
+        for (int i = 0; i < originalArray.length; i++) {
+            String[] splitArray = originalArray[i].split(";");
+            newArray = addString(newArray, newArray.length, splitArray[index]);
+        }
+        return newArray;
+    }
     /**
      * Diese Methode überprüft, ob ein bestimmter String eingegeben wird
      * @param desiredInput Der String, der eingegeben werden muss, damit die Methode true zurückgibt
@@ -90,6 +100,8 @@ public class Input {
      */
     public static double CalculateNewCurrency(int indexOfOldCurrency, int indexOfNewCurrency, double moneyAmount, String[] allCurrecies, double[] allExchangeRates)
     {
-        return Math.round(moneyAmount * allExchangeRates[indexOfOldCurrency] * allExchangeRates[indexOfNewCurrency] * 100) / 100;
+        double newMoney = moneyAmount * allExchangeRates[indexOfOldCurrency] / allExchangeRates[indexOfNewCurrency];
+        newMoney = Math.round(newMoney*100);
+        return newMoney/100;
     }
 }

@@ -1,0 +1,51 @@
+Chinese yuan;		 	0.1046080000
+Euro;			 	0.8209470000
+Japanese yen;		 	0.0065993300	  	 
+U.K. pound;		 	0.9167840000
+U.S. dollar;		 	0.7176110000
+Algerian dinar;	 	  	0.0060724200
+Australian dollar; 	  	0.5121200000
+Bahrain dinar;	 	  	1.9094700000
+Botswana pula;	 	  	0.0681343000 
+Brazilian real; 	  	0.1937500000
+Brunei dollar;	 	  	0.5290390000
+Canadian dollar;  	  	0.5361990000
+Chilean peso;	 	  	0.0010429100
+Colombian peso;	 	  	0.0002237640
+Czech koruna;	 	  	0.0321278000
+Danish krone;	 	  	0.1100370000
+Hungarian forint; 	  	0.0025574700
+Icelandic krona; 	  	0.0060746200
+Indian rupee;	 	  	0.0103331000
+Indonesian rupiah; 	  	0.0000509010
+Iranian rial;	 	  	0.0000170943
+Israeli New Shekel; 	  	0.1943580000
+Kazakhstani tenge; 	  	0.0018987600	 
+Korean won;	 	  	0.0006380720
+Kuwaiti dinar;	 	  	2.3691100000
+Libyan dinar;	 	  	0.5174910000
+Malaysian ringgit; 	  	0.1746650000
+Mauritian rupee; 	  	0.0209882000	 
+Mexican peso;	 	  	0.0371599000
+Nepalese rupee;	 	  	0.0064356300
+New Zealand dollar; 	  	0.4834020000	 
+Norwegian krone; 	  	0.0838316000
+Omani rial;	 	  	1.8672500000
+Pakistani rupee; 	  	0.0051707400
+Peruvian sol; 	  	  	0.2140110000
+Philippine peso; 	  	0.0136598000
+Polish zloty;	 	  	0.1910740000
+Qatari riyal;	 	  	0.1972410000
+Russian ruble; 	  	  	0.0110000000  	  	 
+Saudi Arabian riyal; 	  	0.1914560000
+Singapore dollar; 	  	0.5290390000
+South African rand; 	  	0.0516910000
+Sri Lankan rupee; 	  	0.0039269700
+Swedish krona;	 	  	0.0803140000
+Swiss franc;	 	  	0.7312310000	 
+Thai baht;	 	  	0.0224629000
+Trinidadian dollar; 	  	0.1065240000
+Tunisian dinar; 	  	0.2374220000
+U.A.E. dirham;	 	  	0.1954960000
+Uruguayan peso; 	  	0.0221373000
+Bolivar Soberano; 	  	0.0011278300
