@@ -18,9 +18,9 @@ public class App {
     public static String[] allCurrencies;
     public static double[] allExchangeRates;
 
-    private int indexOfOldCurrency = -1;
-    private int indexOfNewCurrency = -1;
-    private double moneyAmount;
+    private static int indexOfOldCurrency = -1;
+    private static int indexOfNewCurrency = -1;
+    private static double moneyAmount;
 
     public static void main( String[] args ) {
         //In den folgenden 7 Zeilen wird die .txt Datei in die 2 Arrays konvertiert
@@ -33,29 +33,13 @@ public class App {
             System.out.println("Fail");
         }
 
-        // Beispiel für die Input.getInput()-Methode
-        String pressedKeys = scan.next();
-        if(Input.getInput("Hello", pressedKeys)) {
-            System.out.println("success");
-        }
-        else {
-            System.out.println("fail");
-        }
-
-        // Beispiel für die Input.searchAllCurrencies()-Methode
-        String searchedString = scan.next();
-        String[] searchedExample = Input.searchAllCurrencies(allCurrencies, searchedString);
-        System.out.println(Arrays.toString(searchedExample));
-        // oder untereinander
-        for (int i = 0; i < searchedExample.length; i++) {
-            System.out.println((i) + ". " + searchedExample[i]);
-        }
-
+        upperInterface();
+        lowerInterface();
     }
 
     // TODO: write test
-    private void upperInterface(){
-        if (indexOfOldCurrency != 0 && indexOfNewCurrency != 0) {
+    private static void upperInterface(){
+        if (indexOfOldCurrency != -1 && indexOfNewCurrency != -1) {
             System.out.println("Buying " + moneyAmount + " of " + allCurrencies[indexOfOldCurrency]);
             moneyAmount = Input.CalculateNewCurrency(indexOfOldCurrency, indexOfNewCurrency, moneyAmount, allCurrencies, allExchangeRates);
             System.out.println("Selling " + moneyAmount + " of " + allCurrencies[indexOfNewCurrency]);
@@ -67,47 +51,77 @@ public class App {
             System.out.println("+++++++++++++++++++++++++++++++++++++");
         }
     }
-    private void lowerInterface() {
+    private static void lowerInterface() {
         System.out.println("0: select currency to buy");
         System.out.println("1: select currency to sell");
         System.out.println("2: choose amount to be converted");
         System.out.println("Please choose an Option (x to exit):");
 
-        if (Input.getInput("0", scan.next())) {
-            search();
-        }
-        if (Input.getInput("1", scan.next())) {
-            search();
-        }
-        if (Input.getInput("2", scan.next())) {
-            search();
-        }
-        if (Input.getInput("x", scan.next())) {
-            exit();
-        }
+        String userInput = scan.next();
+
+        if (Input.getInput("0", userInput))
+            search(userInput);
+        if (Input.getInput("1", userInput))
+            search(userInput);
+        if (Input.getInput("2", userInput))
+            search(userInput);
+        if (Input.getInput("x", userInput))
+            System.exit(0);
     }
 
-     private void search() {
+    /**
+     * Sucht alle Währungen nach dem scanInput(z.B. 'dol') und speichert alle gefundenen Währungsnamen in einem neuen Array
+     * @param userInput Der erste Input des Users (Wahl der Option - 0,1,2)
+     */
+     private static void search(String userInput) {
          System.out.println("Enter a currency`s name or part of it (x to exit:)");
+         //Der Teil des Währungsnamen, nach dem gesucht werden soll
          String scanInput = scan.next();
 
-         if (Input.getInput("x,", scanInput)) {
-             exit();
+         if (Input.getInput("x", scanInput)) {
+             lowerInterface();
          } else {
+             // Ein Array wird erstellt, in dem alle Währungsnamen gespeichert werden, welche den scanInput enthalten
              String[] searchedStrings = Input.searchAllCurrencies(allCurrencies, scanInput);
-             if (searchedStrings.length < 0) {
+             //Wenn ein Währungsname gefunden wurde
+             if (searchedStrings.length > 0) {
                  for (int i = 0; i < searchedStrings.length; i++) {
                      System.out.println((i) + ". " + searchedStrings[i]);
                  }
-             } else {
+                 System.out.println("Choose an option");
+                 selectIndexOfCurrency(searchedStrings, userInput);
+             }
+             //Wenn kein Währungsname gefunden wurde
+             else {
                  System.out.println("No valid input, please reenter");
-                 search();
+                 search(userInput);
              }
          }
      }
 
-     private void exit()
-        {
+    /**
+     * Man schaut, wann die gewählte Währung im allCurrencies[] vorkommt und speichert den Index
+     * @param searchedStrings Das Array, in dem die gefilterten Währungen gespeichert sind
+     * @param userInput Die Wahl des Users im lowerInterface(Auswahl, ob 0,1)
+     */
+     private static void selectIndexOfCurrency(String[] searchedStrings, String userInput) {
+         String indexOfCurrency = scan.next();
 
-        }
+         //Wenn die eingegebene Zahl innerhalb der Länge des neuen Währungsarrays liegt
+         if(Integer.parseInt(indexOfCurrency) <= searchedStrings.length) {
+             for (int i = 0; i < allCurrencies.length; i++) {
+                 //Loopt durch alle Währungen und checkt, wann der Name der gesuchten Währung gleich dem Namen der Währung
+                 // im allCUrrencies[] ist und speichert den Index ab
+                 if(searchedStrings[Integer.parseInt(indexOfCurrency)].equals(allCurrencies[i])) {
+                     if(Integer.parseInt(userInput) == 0)
+                         indexOfOldCurrency = i;
+                     else if(Integer.parseInt(userInput) == 1)
+                         indexOfNewCurrency = i;
+                     break;
+                 }
+             }
+         }
+         else
+             selectIndexOfCurrency(searchedStrings, userInput);
+     }
 }
