@@ -1,5 +1,6 @@
 package de.hdm_stuttgart.mi.se1;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -66,4 +67,47 @@ public class App {
             System.out.println("+++++++++++++++++++++++++++++++++++++");
         }
     }
+    private void lowerInterface() {
+        System.out.println("0: select currency to buy");
+        System.out.println("1: select currency to sell");
+        System.out.println("2: choose amount to be converted");
+        System.out.println("Please choose an Option (x to exit):");
+
+        if (Input.getInput("0", scan.next())) {
+            search();
+        }
+        if (Input.getInput("1", scan.next())) {
+            search();
+        }
+        if (Input.getInput("2", scan.next())) {
+            search();
+        }
+        if (Input.getInput("x", scan.next())) {
+            exit();
+        }
+    }
+
+     private void search() {
+         System.out.println("Enter a currency`s name or part of it (x to exit:)");
+         String scanInput = scan.next();
+
+         if (Input.getInput("x,", scanInput)) {
+             exit();
+         } else {
+             String[] searchedStrings = Input.searchAllCurrencies(allCurrencies, scanInput);
+             if (searchedStrings.length < 0) {
+                 for (int i = 0; i < searchedStrings.length; i++) {
+                     System.out.println((i) + ". " + searchedStrings[i]);
+                 }
+             } else {
+                 System.out.println("No valid input, please reenter");
+                 search();
+             }
+         }
+     }
+
+     private void exit()
+        {
+
+        }
 }
