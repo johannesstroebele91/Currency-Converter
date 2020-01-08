@@ -16,7 +16,7 @@ public class Input {
      * Diese Methode liest eine Datei in ein Array ein
      * @param filename Der Name der Datei, die eingelesen werden soll
      * @return Ein Array, dass die einzelnen Zeilen der Datei als einzelne Arraypositionen
-     * @throws IOException
+     * @throws IOException Legt fest welche Expection geworfen wird
      */
     public static String[] readLines(String filename) throws IOException {
         FileReader fileReader = new FileReader(filename);
@@ -30,6 +30,12 @@ public class Input {
         return lines.toArray(new String[lines.size()]);
     }
 
+    /**
+     * Die Methode wird genutzt, um Strings zu trennen und diese einem neuen String-Array hinzuzufügen
+     * @param originalArray Array in welchem sowohl Währungsname als auch Währung abgespeichert sind
+     * @param index Durch das Spliten wurde ein Array mit 2 Index erstellt - "0" für Währungsname und "1" für Währung
+     * @return gibt Array mit den Währungsnamen oder den Währungen zurück
+     */
     public static String[] splitArray(String[] originalArray, int index)
     {
         String[] newArray = new String[0];
@@ -39,9 +45,11 @@ public class Input {
         }
         return newArray;
     }
+
     /**
      * Diese Methode überprüft, ob ein bestimmter String eingegeben wird
      * @param desiredInput Der String, der eingegeben werden muss, damit die Methode true zurückgibt
+     * @param pressedKeys Input der vom User eingegeben wird
      * @return Ob der eingegebe String gleich ist wie der gewünschte String
      */
     public static boolean getInput(String desiredInput, String pressedKeys) {
@@ -56,6 +64,7 @@ public class Input {
      * Die Methode ist wichtig für die Suchfunktion. Sie gibt uns ein String-Array mit allen Strings zurück,
      * die den eingegeben String enthalten.
      * @param stringsToBeChecked Das Array mit den Strings, die überprüft werden sollen (in unserem alle Währungsnamen)
+     * @param searchedString Input der vom User eingegeben wird
      * @return Ein neues Array mit allen Namen, die bei der Suche gefunden wurden
      */
     public static String[] searchAllCurrencies(String[] stringsToBeChecked, String searchedString) {
