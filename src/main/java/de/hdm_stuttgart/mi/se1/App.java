@@ -107,6 +107,7 @@ public class App {
      private static void selectIndexOfCurrency(String[] searchedStrings, String userInput) {
          String indexOfCurrency = scan.next();
 
+         // TODO: Input missmatch exception
          //Wenn die eingegebene Zahl innerhalb der Länge des neuen Währungsarrays liegt
          if(Integer.parseInt(indexOfCurrency) <= searchedStrings.length) {
              for (int i = 0; i < allCurrencies.length; i++) {
