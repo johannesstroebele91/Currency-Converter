@@ -1,8 +1,8 @@
 package de.hdm_stuttgart.mi.se1;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -55,18 +55,24 @@ public class App {
         System.out.println("0: select currency to buy");
         System.out.println("1: select currency to sell");
         System.out.println("2: choose amount to be converted");
-        System.out.println("Please choose an Option (x to exit):");
+        System.out.println("Please choose an option (x to exit): ");
 
         String userInput = scan.next();
 
         if (Input.getInput("0", userInput))
             search(userInput);
-        if (Input.getInput("1", userInput))
+        else if (Input.getInput("1", userInput))
             search(userInput);
-        if (Input.getInput("2", userInput))
-            search(userInput);
-        if (Input.getInput("x", userInput))
+        else if (Input.getInput("2", userInput))
+            saveMoneyAmount();
+        else if (Input.getInput("x", userInput))
             System.exit(0);
+        else {
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("Not a valid input, please try again\n");
+            upperInterface();
+            lowerInterface();
+        }
     }
 
     /**
@@ -74,7 +80,7 @@ public class App {
      * @param userInput Der erste Input des Users (Wahl der Option - 0,1,2)
      */
      private static void search(String userInput) {
-         System.out.println("Enter a currency`s name or part of it (x to exit:)");
+         System.out.println("Enter a currency`s name or part of it (x to exit: )");
          //Der Teil des Währungsnamen, nach dem gesucht werden soll
          String scanInput = scan.next();
 
@@ -88,12 +94,13 @@ public class App {
                  for (int i = 0; i < searchedStrings.length; i++) {
                      System.out.println((i) + ". " + searchedStrings[i]);
                  }
-                 System.out.println("Choose an option");
+                 System.out.println("Select a currency by index");
                  selectIndexOfCurrency(searchedStrings, userInput);
              }
              //Wenn kein Währungsname gefunden wurde
              else {
-                 System.out.println("No valid input, please reenter");
+                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                 System.out.println("Not a valid input. Please try again\n");
                  search(userInput);
              }
          }
@@ -123,10 +130,26 @@ public class App {
              } else
                  selectIndexOfCurrency(searchedStrings, userInput);
          }
+
+         // Bei String Inputs, wird ein Fehler geworfen
          catch(NumberFormatException e)
          {
-             System.out.println("Not a valid Input, please try again");
+             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+             System.out.println("Not a valid Input, please try again\n");
              selectIndexOfCurrency(searchedStrings, userInput);
+         }
+         upperInterface();
+         lowerInterface();
+     }
+     // Speicherung des Geldbetrags
+     private static void saveMoneyAmount(){
+         System.out.println("Please enter an amount");
+         try {
+             moneyAmount = scan.nextDouble();
+             moneyAmount = (double) Math.round(moneyAmount*100) / 100;
+         } catch (InputMismatchException e){
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+             System.out.println("Not a valid Input, please try again\n");
          }
          upperInterface();
          lowerInterface();

@@ -113,7 +113,6 @@ public class Input {
     public static double CalculateNewCurrency(int indexOfOldCurrency, int indexOfNewCurrency, double moneyAmount, String[] allCurrecies, double[] allExchangeRates)
     {
         double newMoney = moneyAmount * allExchangeRates[indexOfOldCurrency] / allExchangeRates[indexOfNewCurrency];
-        newMoney = Math.round(newMoney*100);
-        return newMoney/100;
+        return (double) Math.round(newMoney*100) / 100;
     }
 }
