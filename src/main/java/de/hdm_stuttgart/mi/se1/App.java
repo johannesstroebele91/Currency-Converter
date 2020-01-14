@@ -106,23 +106,29 @@ public class App {
      */
      private static void selectIndexOfCurrency(String[] searchedStrings, String userInput) {
          String indexOfCurrency = scan.next();
-
-         // TODO: Input missmatch exception
-         //Wenn die eingegebene Zahl innerhalb der Länge des neuen Währungsarrays liegt
-         if(Integer.parseInt(indexOfCurrency) <= searchedStrings.length) {
-             for (int i = 0; i < allCurrencies.length; i++) {
-                 //Loopt durch alle Währungen und checkt, wann der Name der gesuchten Währung gleich dem Namen der Währung
-                 // im allCUrrencies[] ist und speichert den Index ab
-                 if(searchedStrings[Integer.parseInt(indexOfCurrency)].equals(allCurrencies[i])) {
-                     if(Integer.parseInt(userInput) == 0)
-                         indexOfOldCurrency = i;
-                     else if(Integer.parseInt(userInput) == 1)
-                         indexOfNewCurrency = i;
-                     break;
+         try {
+             //Wenn die eingegebene Zahl innerhalb der Länge des neuen Währungsarrays liegt
+             if (Integer.parseInt(indexOfCurrency) <= searchedStrings.length) {
+                 for (int i = 0; i < allCurrencies.length; i++) {
+                     //Loopt durch alle Währungen und checkt, wann der Name der gesuchten Währung gleich dem Namen der Währung
+                     // im allCUrrencies[] ist und speichert den Index ab
+                     if (searchedStrings[Integer.parseInt(indexOfCurrency)].equals(allCurrencies[i])) {
+                         if (Integer.parseInt(userInput) == 0)
+                             indexOfOldCurrency = i;
+                         else if (Integer.parseInt(userInput) == 1)
+                             indexOfNewCurrency = i;
+                         break;
+                     }
                  }
-             }
+             } else
+                 selectIndexOfCurrency(searchedStrings, userInput);
          }
-         else
+         catch(NumberFormatException e)
+         {
+             System.out.println("Not a valid Input, please try again");
              selectIndexOfCurrency(searchedStrings, userInput);
+         }
+         upperInterface();
+         lowerInterface();
      }
 }

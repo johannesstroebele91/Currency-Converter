@@ -14,19 +14,22 @@ public class Input {
 
     /**
      * Diese Methode liest eine Datei in ein Array ein
-     * @param filename Der Name der Datei, die eingelesen werden soll
+     * @param FileName Der Name der Datei, die eingelesen werden soll
      * @return Ein Array, dass die einzelnen Zeilen der Datei als einzelne Arraypositionen
      * @throws IOException Legt fest welche Expection geworfen wird
      */
-    public static String[] readLines(String filename) throws IOException {
-        FileReader fileReader = new FileReader(filename);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
+    public static String[] readLines(String FileName) throws IOException
+    {
+        FileReader fileReader = new FileReader(FileName);
+        BufferedReader br = new BufferedReader(fileReader);
+
         List<String> lines = new ArrayList<String>();
         String line = null;
-        while ((line = bufferedReader.readLine()) != null) {
+
+        while ((line = br.readLine()) != null) {
             lines.add(line);
         }
-        bufferedReader.close();
+        br.close();
         return lines.toArray(new String[lines.size()]);
     }
 
