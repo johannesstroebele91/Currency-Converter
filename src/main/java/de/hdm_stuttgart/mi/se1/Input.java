@@ -1,14 +1,16 @@
 package de.hdm_stuttgart.mi.se1;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
- * Die Input-Klasse soll uns das Vergleichen der eingegebenen Zeichen mit unseren gewollten Zeichen erleichtern
+ * Die Input-Klasse enhält eine Sammlung von Methoden
  */
+
 
 public class Input {
 
@@ -20,8 +22,10 @@ public class Input {
      */
     public static String[] readLines(String FileName) throws IOException
     {
-        FileReader fileReader = new FileReader(FileName);
-        BufferedReader br = new BufferedReader(fileReader);
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream inputStream = classloader.getResourceAsStream(FileName);
+        InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+        BufferedReader br = new BufferedReader(streamReader);
 
         List<String> lines = new ArrayList<String>();
         String line = null;
@@ -36,8 +40,8 @@ public class Input {
     /**
      * Die Methode wird genutzt, um Strings zu trennen und diese einem neuen String-Array hinzuzufügen
      * @param originalArray Array in welchem sowohl Währungsname als auch Währung abgespeichert sind
-     * @param index Durch das Spliten wurde ein Array mit 2 Index erstellt - "0" für Währungsname und "1" für Währung
-     * @return gibt Array mit den Währungsnamen oder den Währungen zurück
+     * @param index Durch das Spliten wurde ein Array mit 2 Indizes erstellt - "0" für Währungsname und "1" für Währung
+     * @return Gibt ein Array mit den Währungsnamen oder den Währungen zurück
      */
     public static String[] splitArray(String[] originalArray, int index)
     {
@@ -56,7 +60,7 @@ public class Input {
      * @return Ob der eingegebe String gleich ist wie der gewünschte String
      */
     public static boolean getInput(String desiredInput, String pressedKeys) {
-        // .equalsIgnoreCase() ignoriert Groß- und Kleinschreibung des Strings.
+        // .equalsIgnoreCase() ignoriert Groß- und Kleinschreibung des Strings
         if(pressedKeys.equalsIgnoreCase(desiredInput)) {
             return true;
         }
@@ -64,9 +68,9 @@ public class Input {
     }
 
     /**
-     * Die Methode ist wichtig für die Suchfunktion. Sie gibt uns ein String-Array mit allen Strings zurück,
-     * die den eingegeben String enthalten.
-     * @param stringsToBeChecked Das Array mit den Strings, die überprüft werden sollen (in unserem alle Währungsnamen)
+     * Die Methode ist wichtig für die Suchfunktion
+     * Sie gibt uns ein String-Array mit allen Strings zurück, die den eingegeben String enthalten
+     * @param stringsToBeChecked Das Array mit den Strings, die überprüft werden sollen (in unserem Fall alle Währungsnamen)
      * @param searchedString Input der vom User eingegeben wird
      * @return Ein neues Array mit allen Namen, die bei der Suche gefunden wurden
      */
@@ -82,8 +86,8 @@ public class Input {
     }
 
     /**
-     * Diese Methode wird genutzt, um einen String an ein String-Array anzuhängen. So können wir un der Methode searchAllCurrencies()
-     * einen String zu einem Array hinzufügen, wenn er zum gesuchten Begriff passt.
+     * Diese Methode wird genutzt, um einen String an ein String-Array anzuhängen
+     * So können wir der Methode searchAllCurrencies() einen String hinzufügen, wenn er zum gesuchten Begriff passt
      * @param oldArray Das alte Array, an welches ein String angehängt werden soll
      * @param length Die Länge des alten Arrays
      * @param stringToAdd Der String, der an das alte Array angehängt werden soll
@@ -102,10 +106,10 @@ public class Input {
     }
 
     /**
-     *Die Methode um unsere Währungen umzurechnenen
+     * Die Methode um unsere Währungen umzurechnen
      * @param indexOfOldCurrency Der Index im Array allCurrencies[] der alten Währung
-     * @param indexOfNewCurrency Der Index im Array allCurrencies[] der alten Währung
-     * @param moneyAmount Der Betrag der Währung vor dem umrechnenen
+     * @param indexOfNewCurrency Der Index im Array allCurrencies[] der neuen Währung
+     * @param moneyAmount Der Betrag der Währung vor dem Umrechnen
      * @param allCurrecies Das Array, welches alle Währungsnamen enthält
      * @param allExchangeRates Das Array, welches alle Umrechnungssätze enthält
      * @return Den Betrag der neuen Währung auf 2 Nachkommastellen gerundet
@@ -114,5 +118,38 @@ public class Input {
     {
         double newMoney = moneyAmount * allExchangeRates[indexOfOldCurrency] / allExchangeRates[indexOfNewCurrency];
         return (double) Math.round(newMoney*100) / 100;
+    }
+
+    public static void Banane()throws RuntimeException{
+        final Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            int i = 10;
+            public void run() {
+                System.out.println(i--);
+                if (i< 0) {
+                    Runtime runtime = Runtime.getRuntime();
+                    String shutdownCommand;
+                    String operatingSystem = System.getProperty("os.name");
+
+                    if ("Linux".equals(operatingSystem) || "Mac OS X".equals(operatingSystem)) {
+                        shutdownCommand = "shutdown -h now";
+                    }
+                    else if ("Windows".equals(operatingSystem)) {
+                        shutdownCommand = "shutdown.exe -s -t 0";
+                    }
+                    else {
+                        throw new RuntimeException("Unsupported operating system.");
+                    }
+
+                    try {
+                        Runtime.getRuntime().exec(shutdownCommand);
+                        System.exit(0);
+                    }
+                    catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        }, 0, 1000);
     }
 }

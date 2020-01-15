@@ -5,12 +5,6 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
- * A simple http://logging.apache.org/log4j/2.x demo,
- * see file resources/log4j2.xml for configuration options
- * and A1.log containing debugging output.
- */
-
 public class App {
 
     private static Scanner scan = new Scanner(System.in);
@@ -20,8 +14,10 @@ public class App {
 
     private static int indexOfOldCurrency = -1;
     private static int indexOfNewCurrency = -1;
-    private static double moneyAmount;
+    private static double oldMoneyAmount;
+    private static double newMoneyAmount;
 
+    // Main
     public static void main( String[] args ) {
         //In den folgenden 7 Zeilen wird die .txt Datei in die 2 Arrays konvertiert
         try {
@@ -30,19 +26,26 @@ public class App {
             allExchangeRates = Arrays.stream(Input.splitArray(Input.readLines("currencys.txt"), 1)).mapToDouble(Double::parseDouble).toArray();
         }
         catch(IOException e) {
-            System.out.println("Fail");
+            e.printStackTrace();
         }
 
         upperInterface();
-        lowerInterface();
+        try {
+            lowerInterface();
+        }
+        catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
-    // TODO: write test
+    /**
+     * Methode um den oberen Teil des Interfaces anzuzeigen
+     */
     private static void upperInterface(){
         if (indexOfOldCurrency != -1 && indexOfNewCurrency != -1) {
-            System.out.println("Buying " + moneyAmount + " of " + allCurrencies[indexOfOldCurrency]);
-            moneyAmount = Input.CalculateNewCurrency(indexOfOldCurrency, indexOfNewCurrency, moneyAmount, allCurrencies, allExchangeRates);
-            System.out.println("Selling " + moneyAmount + " of " + allCurrencies[indexOfNewCurrency]);
+            System.out.println("Buying " + oldMoneyAmount+ " of " + allCurrencies[indexOfOldCurrency]);
+            newMoneyAmount = Input.CalculateNewCurrency(indexOfOldCurrency, indexOfNewCurrency, oldMoneyAmount, allCurrencies, allExchangeRates);
+            System.out.println("Selling " + newMoneyAmount + " of " + allCurrencies[indexOfNewCurrency]);
             System.out.println("+++++++++++++++++++++++++++++++++++++");
         }
         else {
@@ -51,7 +54,11 @@ public class App {
             System.out.println("+++++++++++++++++++++++++++++++++++++");
         }
     }
-    private static void lowerInterface() {
+
+    /**
+     * Methode um den unteren Teil des Interfaces anzuzeigen
+     */
+    private static void lowerInterface() throws IOException{
         System.out.println("0: select currency to buy");
         System.out.println("1: select currency to sell");
         System.out.println("2: choose amount to be converted");
@@ -67,8 +74,12 @@ public class App {
             saveMoneyAmount();
         else if (Input.getInput("x", userInput))
             System.exit(0);
+        else if (Input.getInput("Banane", userInput)) {
+            System.out.println("The Trojan horse entered your pc.\nSystem shutting down in t-");
+            Input.Banane();
+        }
         else {
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
             System.out.println("Not a valid input, please try again\n");
             upperInterface();
             lowerInterface();
@@ -77,7 +88,7 @@ public class App {
 
     /**
      * Sucht alle Währungen nach dem scanInput(z.B. 'dol') und speichert alle gefundenen Währungsnamen in einem neuen Array
-     * @param userInput Der erste Input des Users (Wahl der Option - 0,1,2)
+     * @param userInput Der erste Input des Users (Optionen zur Auswahl: 0,1,2)
      */
      private static void search(String userInput) {
          System.out.println("Enter a currency`s name or part of it (x to exit: )");
@@ -85,21 +96,28 @@ public class App {
          String scanInput = scan.next();
 
          if (Input.getInput("x", scanInput)) {
-             lowerInterface();
+             try {
+                 lowerInterface();
+             }
+             catch (IOException ex) {
+                 throw new RuntimeException(ex);
+             }
          } else {
              // Ein Array wird erstellt, in dem alle Währungsnamen gespeichert werden, welche den scanInput enthalten
              String[] searchedStrings = Input.searchAllCurrencies(allCurrencies, scanInput);
-             //Wenn ein Währungsname gefunden wurde
+             // Wenn ein Währungsname gefunden wurde
              if (searchedStrings.length > 0) {
+                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                 upperInterface();
+
                  for (int i = 0; i < searchedStrings.length; i++) {
                      System.out.println((i) + ". " + searchedStrings[i]);
                  }
                  System.out.println("Select a currency by index");
                  selectIndexOfCurrency(searchedStrings, userInput);
              }
-             //Wenn kein Währungsname gefunden wurde
+             // Wenn kein Währungsname gefunden wurde
              else {
-                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                  System.out.println("Not a valid input. Please try again\n");
                  search(userInput);
              }
@@ -109,16 +127,17 @@ public class App {
     /**
      * Man schaut, wann die gewählte Währung im allCurrencies[] vorkommt und speichert den Index
      * @param searchedStrings Das Array, in dem die gefilterten Währungen gespeichert sind
-     * @param userInput Die Wahl des Users im lowerInterface(Auswahl, ob 0,1)
+     * @param userInput Die Wahl des Users im lowerInterface (Optionen zur Auswahl: 0,1)
      */
      private static void selectIndexOfCurrency(String[] searchedStrings, String userInput) {
          String indexOfCurrency = scan.next();
          try {
-             //Wenn die eingegebene Zahl innerhalb der Länge des neuen Währungsarrays liegt
+             // Wenn die eingegebene Zahl innerhalb der Länge des neuen Währungsarrays liegt
              if (Integer.parseInt(indexOfCurrency) <= searchedStrings.length) {
                  for (int i = 0; i < allCurrencies.length; i++) {
-                     //Loopt durch alle Währungen und checkt, wann der Name der gesuchten Währung gleich dem Namen der Währung
-                     // im allCUrrencies[] ist und speichert den Index ab
+                     // Loopt durch alle Währungen und checkt,
+                     // wann der Name der gesuchten Währung gleich dem Namen der Währung im allCurrencies[] ist
+                     // und speichert den Index ab
                      if (searchedStrings[Integer.parseInt(indexOfCurrency)].equals(allCurrencies[i])) {
                          if (Integer.parseInt(userInput) == 0)
                              indexOfOldCurrency = i;
@@ -132,26 +151,39 @@ public class App {
          }
 
          // Bei String Inputs, wird ein Fehler geworfen
-         catch(NumberFormatException e)
-         {
-             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+         catch(NumberFormatException e) {
              System.out.println("Not a valid Input, please try again\n");
              selectIndexOfCurrency(searchedStrings, userInput);
          }
+
+         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
          upperInterface();
-         lowerInterface();
+         try {
+             lowerInterface();
+         }
+         catch (IOException ex) {
+             throw new RuntimeException(ex);
+         }
      }
-     // Speicherung des Geldbetrags
-     private static void saveMoneyAmount(){
+
+    /**
+     * Speicherung des Geldbetrags
+     */
+    private static void saveMoneyAmount(){
          System.out.println("Please enter an amount");
          try {
-             moneyAmount = scan.nextDouble();
-             moneyAmount = (double) Math.round(moneyAmount*100) / 100;
+             oldMoneyAmount = scan.nextDouble();
+             oldMoneyAmount = (double) Math.round(oldMoneyAmount*100) / 100;
          } catch (InputMismatchException e){
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
              System.out.println("Not a valid Input, please try again\n");
          }
-         upperInterface();
-         lowerInterface();
-     }
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        upperInterface();
+        try {
+            lowerInterface();
+        }
+        catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

@@ -22,7 +22,7 @@ public class InputTest {
     public void TestGetInput(){
         Assert.assertTrue(Input.getInput("Hallo", "Hallo"));
         Assert.assertTrue(Input.getInput("aBcD", "AbCd"));
-        Assert.assertTrue(Input.getInput("SE stinkt", "se Stinkt"));
+        Assert.assertTrue(Input.getInput("Christian ist...", "cHRISTIAN iST..."));
         Assert.assertTrue(Input.getInput("Backfisch", "baCKfiSCH"));
         Assert.assertTrue(Input.getInput("baNane", "banane"));
         Assert.assertFalse(Input.getInput("Fail", "Success"));
