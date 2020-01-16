@@ -30,12 +30,7 @@ public class App {
         }
 
         upperInterface();
-        try {
-            lowerInterface();
-        }
-        catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+        lowerInterface();
     }
 
     /**
@@ -58,7 +53,7 @@ public class App {
     /**
      * Methode um den unteren Teil des Interfaces anzuzeigen
      */
-    private static void lowerInterface() throws IOException{
+    private static void lowerInterface() {
         System.out.println("0: select currency to buy");
         System.out.println("1: select currency to sell");
         System.out.println("2: choose amount to be converted");
@@ -96,12 +91,7 @@ public class App {
          String scanInput = scan.next();
 
          if (Input.getInput("x", scanInput)) {
-             try {
-                 lowerInterface();
-             }
-             catch (IOException ex) {
-                 throw new RuntimeException(ex);
-             }
+             lowerInterface();
          } else {
              // Ein Array wird erstellt, in dem alle Währungsnamen gespeichert werden, welche den scanInput enthalten
              String[] searchedStrings = Input.searchAllCurrencies(allCurrencies, scanInput);
@@ -158,12 +148,7 @@ public class App {
 
          System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
          upperInterface();
-         try {
-             lowerInterface();
-         }
-         catch (IOException ex) {
-             throw new RuntimeException(ex);
-         }
+         lowerInterface();
      }
 
     /**
@@ -179,11 +164,6 @@ public class App {
          }
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         upperInterface();
-        try {
-            lowerInterface();
-        }
-        catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+        lowerInterface();
     }
 }

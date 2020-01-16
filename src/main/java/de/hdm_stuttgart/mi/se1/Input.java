@@ -120,36 +120,20 @@ public class Input {
         return (double) Math.round(newMoney*100) / 100;
     }
 
-    public static void Banane()throws RuntimeException{
+    /**
+     * Diese Methode ist ein Easter Egg
+     */
+    public static void Banane(){
         final Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             int i = 10;
             public void run() {
                 System.out.println(i--);
                 if (i< 0) {
-                    Runtime runtime = Runtime.getRuntime();
-                    String shutdownCommand;
-                    String operatingSystem = System.getProperty("os.name");
-
-                    if ("Linux".equals(operatingSystem) || "Mac OS X".equals(operatingSystem)) {
-                        shutdownCommand = "shutdown -h now";
-                    }
-                    else if ("Windows".equals(operatingSystem)) {
-                        shutdownCommand = "shutdown.exe -s -t 0";
-                    }
-                    else {
-                        throw new RuntimeException("Unsupported operating system.");
-                    }
-
-                    try {
-                        Runtime.getRuntime().exec(shutdownCommand);
-                        System.exit(0);
-                    }
-                    catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    System.out.println("It's just a prank bro");
+                    System.exit(0);
                 }
             }
-        }, 0, 1000);
+        },0, 1000);
     }
 }
