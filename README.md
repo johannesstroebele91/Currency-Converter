@@ -1,4 +1,4 @@
-# SE1 CurrencyConverter
+# CurrencyConverter
 
 ## Summary
 
